@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  main:
+    allow-circular-references: true
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    cache: false
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/SimpleToDoBase
+    username: postgres
+    password: qwerty
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  web:
+    resources:
+      static-locations: [ classpath:/resources/, classpath:/static/ ]
+      chain:
+        strategy:
+          content:
+            paths: /**
+            enabled: true
