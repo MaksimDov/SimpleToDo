@@ -260,16 +260,16 @@
 <body>
 <div class="container">
     <section id="content">
-        <form th:action="@{/}" method="post">
+        <form th:action="@{/signIn}" method="post">
             <h1>Login Form</h1>
             <div>
-                <input type="text" placeholder="Username" required="" id="username" name="login"/>
+                <input type="text" placeholder="username" required="" id="username" name="username"/>
             </div>
             <div>
                 <input type="password" placeholder="Password" required="" id="password" name="password"/>
             </div>
             <div>
-                <input type="submit" value="Log in" />
+                <input type="submit" value="Log in">
                 <input type="button" value="Sign Up" onclick="document.location='/signup'">
             </div>
         </form><!-- form -->

@@ -2,8 +2,9 @@ package com.Maksim.SimpleToDo.controller;
 
 import com.Maksim.SimpleToDo.entity.User;
 import com.Maksim.SimpleToDo.repos.UserRepo;
+import com.Maksim.SimpleToDo.service.MyPasswordEncoder;
+import org.owasp.encoder.Encode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.apache.log4j.Logger;
@@ -18,12 +19,10 @@ public class RegistrationController {
     @Autowired
     UserRepo userRepo;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signup")
-    public String signup(User user){
-        User userFromDB = userRepo.findByLogin(user.getLogin());
+    public String signup(User user) throws Exception {
+        User userFromDB = userRepo.findByUsername(user.getUsername());
         if(userFromDB != null){
             LOG.info("User with this login already exists");
             return "redirect:/signup";
@@ -33,29 +32,30 @@ public class RegistrationController {
             LOG.info("User with this email already exists");
             return "redirect:/signup";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+        user.setPassword(MyPasswordEncoder.getSaltedHash(user.getPassword()));
         userRepo.save(user);
-        LOG.info("User: " + user.toString() + "registered");
-        System.out.println(user);
-        return "redirect:/signin";
+        LOG.info("User: " + user.getUsername() + "registered");
+        return "redirect:/signIn";
     }
 
-    @PostMapping("/signin")
-    public String signin(User user, HttpServletResponse response){
-        User userFromDB = userRepo.findByLoginOrEmail(user.getLogin(), user.getLogin());
+
+
+    @PostMapping("/signIn")
+    public String signin(User user, HttpServletResponse response) throws Exception {
+//        User userFromDB = userRepo.findByLoginOrEmail(user.getLogin(), user.getLogin());
+        User userFromDB = userRepo.findByUsername(user.getUsername());
         if(userFromDB == null){
             LOG.info("There is no user with this login or email");
-            return "redirect:/signin";
+            return "redirect:/signIn";
         }
 
-        if(passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())){
-            LOG.info("Wrong password for user: " + userFromDB.getLogin());
-            return "redirect:/signin";
+        if(!MyPasswordEncoder.check(user.getPassword(), userFromDB.getPassword())){
+            LOG.info("Wrong password for user: " + userFromDB.getUsername());
+            return "redirect:/signIn";
         }
-        LOG.info("User " + user.getLogin() + " authorized.");
+        LOG.info("User " + user.getUsername() + " authorized.");
         Cookie cookie = new Cookie("userId", userFromDB.getId().toString());
         response.addCookie(cookie);
-        return "redirect:/";
+        return "redirect:/mainPage";
     }
 }

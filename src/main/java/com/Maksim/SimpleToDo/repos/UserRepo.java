@@ -6,18 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepo extends JpaRepository<User, Long> {
     /**
      * Поиск пользователя в базе данных по логину или адресу почты
-     * @param login
+     * @param username
      * @param email
      * @return
      */
-    User findByLoginOrEmail(String login, String email);
+    User findByUsernameOrEmail(String username, String email);
 
     /**
      * Поиск пользователя в БД по логину
-     * @param login
+     * @param username
      * @return
      */
-    User findByLogin(String login);
+    User findByUsername(String username);
 
     /**
      * Поиск пользователя в БД по адресу почты

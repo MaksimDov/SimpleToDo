@@ -16,7 +16,7 @@ public class WebController {
         return "helloPage.html";
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/signIn")
     public String signinView(){
         return "signin.html";
     }
@@ -26,4 +26,8 @@ public class WebController {
         return "signup.html";
     }
 
+    @GetMapping("/mainPage")
+    public String mainPageView(){
+        return "mainPage.html";
+    }
 }

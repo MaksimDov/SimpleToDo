@@ -18,11 +18,11 @@ public class User {
 
     private String email;
 
-    private String login;
+    private String username;
 
     private String password;
 
     public String toString(){
-        return "Login: " + login + "\nEnail" + email + "\nPassword: " + password + "\n";
+        return "Username: " + username + "\nEmail: " + email + "\nPassword: " + password + "\n";
     }
 }
