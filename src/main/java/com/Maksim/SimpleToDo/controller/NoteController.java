@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
-public class AddNoteController {
+public class NoteController {
 
     @Autowired
     NoteRepo noteRepo;

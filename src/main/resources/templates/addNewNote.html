@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <head>
   <meta charset="UTF-8">
   <title>SignIn</title>
@@ -235,35 +238,7 @@
     font-weight: bold;
     margin: 0 0 10px;
     padding: 15px 10px 15px 40px;
-    width: 80%;
-    text-align: center;
-  }
-
-  #content form { margin: 0 20px; position: relative }
-  #content form select{
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0,0,0,0.08) inset;
-    -moz-box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0,0,0,0.08) inset;
-    -ms-box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0,0,0,0.08) inset;
-    -o-box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0,0,0,0.08) inset;
-    box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0,0,0,0.08) inset;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    /*background: #eae7e7 url(https://cssdeck.com/uploads/media/items/8/8bcLQqF.png) no-repeat;*/
-    border: 1px solid #c8c8c8;
-    color: #777;
-    font: 20px Helvetica, Arial, sans-serif;
-    font-weight: bold;
-    margin: 0 0 10px;
-    padding: 15px 10px 15px 40px;
-    width: 80%;
+    width: 75%;
     text-align: center;
     text-align-last: center;
   }
@@ -346,6 +321,29 @@
 
 </style>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="/mainPage" style="color: white">Main page<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <form th:action="@{/logout}" method="post">
+          <input type="submit"
+                 value="Выход"
+                 style="margin-top: 7px; background-color: #343940; color: white; border: 0"/>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
 <div class="container">
   <section id="content">
     <form th:action="@{/addNote}" method="post">
@@ -354,10 +352,10 @@
         <input type="text" placeholder="Name" required="" id="name" name="name"/>
       </div>
       <div>
-        <select required="" id="type" name="type">
-          <option>High importance</option>
-          <option>Medium importance</option>
-          <option>Low importance</option>
+        <select  required="" id="type" name="type">
+          <option style="color: white; background-color: red">High importance</option>
+          <option style="color: white; background-color: #D69E31">Medium importance</option>
+          <option style="color: white; background-color: green">Low importance</option>
         </select>
       </div>
       <div>
