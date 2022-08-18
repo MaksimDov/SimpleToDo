@@ -42,8 +42,8 @@ public class RegistrationController {
 
     @PostMapping("/signIn")
     public String signin(User user, HttpServletResponse response) throws Exception {
-//        User userFromDB = userRepo.findByLoginOrEmail(user.getLogin(), user.getLogin());
-        User userFromDB = userRepo.findByUsername(user.getUsername());
+        User userFromDB = userRepo.findByUsernameOrEmail(user.getUsername(), user.getUsername());
+//        User userFromDB = userRepo.findByUsername(user.getUsername());
         if(userFromDB == null){
             LOG.info("There is no user with this login or email");
             return "redirect:/signIn";
@@ -58,4 +58,12 @@ public class RegistrationController {
         response.addCookie(cookie);
         return "redirect:/mainPage";
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response){
+        Cookie cookie = new Cookie("userId", null);
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
 }
