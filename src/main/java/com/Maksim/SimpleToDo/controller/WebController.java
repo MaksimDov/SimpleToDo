@@ -1,7 +1,10 @@
 package com.Maksim.SimpleToDo.controller;
 
+import com.Maksim.SimpleToDo.repos.NoteRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
@@ -9,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class WebController {
+
+    @Autowired
+    NoteRepo noteRepo;
     @RequestMapping("/")
     public String hello(){
         return "redirect:/";
@@ -21,15 +27,15 @@ public class WebController {
 
     @GetMapping("/signIn")
     public String signinView(HttpServletRequest request){
-        if(checkCookie(request))
-            return "redirect:/mainPage";
+//        if(checkCookie(request))
+//            return "redirect:/mainPage";
         return "signin.html";
     }
 
     @GetMapping("/signup")
     public String signupView(HttpServletRequest request){
-        if(checkCookie(request))
-            return "redirect:/mainPage";
+//        if(checkCookie(request))
+//            return "redirect:/mainPage";
         return "signup.html";
     }
 
@@ -50,6 +56,15 @@ public class WebController {
         }
         else {
             return "redirect:/signIn";
+        }
+    }
+
+    @RequestMapping("/mainPage/{noteId}")
+    public String singleNote(@PathVariable(value = "noteId") Long noteId) {
+        if (noteRepo.findById(noteId).isPresent()) {
+            return "singleNote.html";
+        } else {
+            return "redirect:/mainPage";
         }
     }
 
